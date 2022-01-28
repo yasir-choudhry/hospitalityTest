@@ -1,0 +1,28 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Digital Services, we have a problem...</h1>
+<h2 class="text-danger">Looks like an error has occurred while trying to processing your request</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Error Details</h3>
+<p>
+    <strong>Message: </strong>@Model.Message
+</p>
+
+@*<span>
+    <strong>Stack Trace: </strong><br />@Html.Raw(Model.StackTrace)
+</span>*@
+
+<a href="#stack" data-toggle="collapse">Click here for the <strong>Stack Trace:</strong></a>
+<div id="stack" class="collapse">
+            @Html.Raw(Model.StackTrace)
+</div>

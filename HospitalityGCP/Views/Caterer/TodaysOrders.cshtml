@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Todays Orders";
+}
+
+@model IEnumerable<HospitalityGCP.Models.ViewModelOrderDetails>
+
+<h1>Todays Orders</h1>
+<br />
+@await Component.InvokeAsync("OrdersList", "Today")

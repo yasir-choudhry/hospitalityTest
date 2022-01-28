@@ -1,0 +1,62 @@
+steps:
+  
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./HospitalityGCP/EncryptedFiles/appsettings.prod.json.enc'
+  - '--plaintext-file=./HospitalityGCP/appsettings.json'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  id: 'DecryptAppsettings'
+  waitFor: ['-']
+
+# Decrypt app yaml
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./HospitalityGCP/EncryptedFiles/app.prod.yaml.enc'
+  - '--plaintext-file=./app.yaml'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  id: 'DecryptAppYaml'
+  waitFor: ['DecryptAppsettings']
+
+# Step:2 Build Docker image
+- name: 'docker'
+  id: 'BuildImage'
+  args: ['build', '--no-cache', '-t', 'gcr.io/$PROJECT_ID/hospitalitygcp:$SHORT_SHA', '-t', 'gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}', '-f', 'HospitalityGCP/Dockerfile', '.']
+  waitFor: ['DecryptAppYaml']
+
+# Step:3 Store image SHA
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'StoreImageSHA'
+  args: ['push', 'gcr.io/$PROJECT_ID/hospitalitygcp:$SHORT_SHA']  
+  waitFor: ['BuildImage']
+
+# Step:4 Store image _APP_ENV
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'StoreImageAppEnv'
+  args: ['push', 'gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}']  
+  waitFor: ['BuildImage']
+
+# Step:5 Deploy service
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'DeployService'
+  entrypoint: 'gcloud'
+  args: ['app', 'deploy', '--image-url=gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}']
+  waitFor: ['StoreImageAppEnv']
+
+ # Step:6 prune app engine versions
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  args:
+  - python3
+  - appengine_prune.py
+  - -v=$_APPENG_VERSIONS_TOKEEP
+  - -p=$PROJECT_ID
+  waitFor: ['DeployService']
+
+timeout: 20m

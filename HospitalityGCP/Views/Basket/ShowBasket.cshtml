@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Place Order";
+}
+
+@model HospitalityGCP.Models.ViewModelShowBasket
+
+<br />
+<p><strong>Orders should be made either 1 full day (e.g. Monday for Wednesday) or 2 full days (e.g. Monday for Thursday) in advance depending on item.</strong></p>
+<div class="row">
+    <div class="col-sm-3">
+        <h1>Menu</h1>
+        <h2 style="font-size:25px">Please choose from the following:</h2>
+        @foreach (var item in Model.MenuItems)
+        {
+            <div class="container-fluid">
+                <div class="row">
+                    <div>
+                        <form method="POST">
+                            <input type="hidden" name="MenuItemID" value="@item.MenuItemID" />
+                            <input type="hidden" name="MenuItemName" value="@item.MenuItemName" />
+                            <input type="hidden" name="MenuItemDesc" value="@item.MenuItemDesc" />
+                            <input type="hidden" name="NoticeReq" value="@item.NoticeReq" />
+                            <input type="hidden" name="MenuItemPrice" value="@item.MenuItemPrice" />
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a data-toggle="collapse" href="#@item.MenuItemID">@Html.DisplayFor(modelItem => item.MenuItemName)</a></h4>
+                                </div>
+                                <div id="@item.MenuItemID" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>@Html.DisplayFor(modelItem => item.MenuItemDesc)</p>
+                                        <h4>@Html.DisplayNameFor(modelItem => item.NoticeReq) - @Html.DisplayFor(modelItem => item.NoticeReq)</h4>
+                                        <h4>Price (per person) <span class="label label-info label-as-badge">£@Html.DisplayFor(modelItem => item.MenuItemPrice)</span></h4>
+                                        <p><input required aria-label="Quantity" type="number" for="quantity" name="Quantity" min="1" max="50" value="0" /> @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().Quantity)</p>
+                                        <p><input aria-label="Delivery time HH:MM" type="time" value="00:00" min="09:00" max="17:00" step="300" name="ItemTime" required /> @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().ItemTime)</p>
+                                        <p><input onclick="getElementById('demo').innerHTML='Item added'" type="submit" value="Add to basket" class="btn btn-success" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-8">
+        <h3 style="font-size:35px">Your basket</h3> <p id="demo" role="alert" aria-live="polite" aria-atomic="true"></p>
+        <fieldset>
+            <table aria-live="polite" id="_tblBasket" asp-action="ShowBasket" asp-controller="User" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().MenuItemName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().Quantity)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().MenuItemPrice)
+                        </th>
+                        <th>
+                            ItemTotal
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ShowItems.FirstOrDefault().ItemTime)
+                        </th>
+                        <th colspan="2"> Update / Remove Item</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.ShowItems)
+                    {
+                        <tr>
+                            <form method="post">
+                                <input type="hidden" name="BasketID" value="@item.BasketID" />
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MenuItemName)
+                                </td>
+                                <td>
+                                    <input aria-label="Quantity" type="number" min="1" max="50" name="Quantity" 
+                                           value=@Html.DisplayFor(modelItem => item.Quantity) />
+                                </td>
+                                <td>
+                                    £@Html.DisplayFor(modelItem => item.MenuItemPrice)
+                                </td>
+                                <td>
+                                    <strong>£@((item.Quantity * item.MenuItemPrice).ToString("N"))</strong>
+                                </td>
+                                <td>
+                                    <input aria-label="Delivery Time HH:MM" type="time" min="09:00" max="17:00" step="300" 
+                                           name="ItemTime" value=@Html.DisplayFor(modelItem => item.ItemTime) />
+                                </td>
+                                <td>
+                                    <button aria-label="@("Update delivery time and quantity for " + item.MenuItemName + " in basket")" 
+                                            type="submit" asp-action="UpdateItem" asp-controller="Basket" 
+                                            asp-route-id="@item.BasketID" class="btn btn-primary btn">Update</button>
+
+                                    <button aria-label="@("Remove " + item.MenuItemName + "from the basket")" type="submit" 
+                                            class="btn btn-danger btn btnremoveitem" id="@("_aRemoveItem"+item.BasketID)" 
+                                            asp-controller="Basket" asp-action="RemoveItem" asp-route-id="@item.BasketID">Remove</button>
+                                </td>
+                            </form>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"><strong>Basket Total:</strong></td>
+                        <td class="text-left">
+                            <strong>£@Model.ShowItems.Sum(x => x.MenuItemPrice * x.Quantity).ToString("N")</strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </fieldset>
+        @if (Model.ShowItems.Count > 0)
+        {
+            <a aria-label="Empty your basket" asp-action="EmptyBasket" asp-controller="Basket" id="_aEmptyBasket" class="btn btn-danger btn-lg">Empty Basket</a>
+            <a aria-label="Checkout your basket" asp-action="PlaceOrder" asp-controller="Basket" class="btn btn-success btn-lg" style="float:right">Checkout</a>
+        }
+    </div>
+</div>

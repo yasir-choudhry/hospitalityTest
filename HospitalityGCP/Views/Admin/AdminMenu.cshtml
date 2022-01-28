@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Admin Menu";
+}
+
+<h1>Admin Menu</h1>
+<br />
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <ul class="nav nav-stacked">
+            <li><a aria-label="Add or Edit Menu Items" class="btn btn-lg btn-primary navbar-btn" asp-controller="Admin" asp-action="MenuItemsList">Add/Edit Menu Items</a></li>
+            <li><a aria-label="Add or Edit Rooms" class="btn btn-lg btn-primary navbar-btn" asp-controller="Admin" asp-action="Rooms">Add/Edit Rooms</a></li>
+            <li><a aria-label="Add or Edit users" class="btn btn-lg btn-primary navbar-btn" asp-controller="Admin" asp-action="SystemUserList">Add/Edit Users</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-3"></div>
+</div>

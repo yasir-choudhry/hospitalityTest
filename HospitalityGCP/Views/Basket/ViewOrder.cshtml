@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Your Orders";
+}
+
+@model IEnumerable<HospitalityGCP.Models.ViewModelOrdersList>
+
+<h1>Your Orders</h1>
+<br />
+<br />
+<table aria-label="View Orders" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingStartTime)
+            </th>
+            <th> View Details</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <form method="post">
+                    <td data-order="@item.OrderDate.ToString("yyyy-MM-dd")">
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeetingStartTime)
+                    </td>
+                    <td>
+                        <a aria-label="View your order details" class="btn btn-primary btn" asp-controller="User" asp-action="UserOrderDetails" asp-route-id="@item.OrderID">Order Details</a>
+                    </td>
+                    @if (item.OrderStatus == "Open")
+                    {
+                        <td>
+                            <button aria-label="Cancel your order" type="submit" class="btn btn-danger btn btncancelorder" asp-controller="Basket" id="@("_aCancelOrder"+item.OrderID)" asp-action="CancelOrder" asp-route-id="@item.OrderID">Cancel Order</button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </form>
+            </tr>
+        }
+    </tbody>
+</table>

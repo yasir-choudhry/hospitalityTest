@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Menu Items";
+}
+
+@model IEnumerable<HospitalityGCP.Models.MenuItems>
+
+<h1>Add/Edit Menu Items</h1>
+<div hidden aria-atomic="true" role="status" aria-live="polite">Item added to the menu</div>
+<br />
+<p>
+    <a class="btn btn-lg btn-primary" asp-controller="Admin" asp-action="AddMenuItem">Add New Menu Item</a>
+</p>
+<br />
+<fieldset>
+    <table aria-label="List of Menu Items" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItemName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItemDesc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MenuItemPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoticeReq)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RFD)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemDesc)
+                    </td>
+                    <td>
+                        £@Html.DisplayFor(modelItem => item.MenuItemPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoticeReq)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RFD)
+                    </td>
+                    <td>
+                        <a aria-label="Edit Menu Item" class="btn btn-primary" asp-controller="Admin" asp-action="EditMenuItem" asp-route-id="@item.MenuItemID">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</fieldset>

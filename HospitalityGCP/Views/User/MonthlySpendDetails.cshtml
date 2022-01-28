@@ -1,0 +1,70 @@
+﻿
+@if (Model != null)
+{
+    @model IEnumerable<HospitalityGCP.Models.ViewModelOrdersList>
+    <h2>Monthly Spend Details</h2>
+    <h3>for @SystemUser.GetCurrentUserEmail()</h3>
+    <br />
+    <br />
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderID)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CostCentre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BasketTotal)
+                </th>
+                <th> View Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostCentre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <strong>£@Html.DisplayFor(modelItem => item.BasketTotal)</strong>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" asp-controller="User" asp-action="UserOrderDetails" asp-route-id="@item.OrderID">Order Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right"><strong>Monthly Total:</strong></td>
+                <td>
+                    <strong>£@Model.Sum(x => x.BasketTotal)</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    <strong class="text-danger">There is no matching invoice data for the above dates</strong>
+}

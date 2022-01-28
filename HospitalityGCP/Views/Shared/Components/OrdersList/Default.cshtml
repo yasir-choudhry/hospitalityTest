@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HospitalityGCP.Models.ViewModelOrdersList>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostCentre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingEndTime)
+            </th>
+            <th>
+                View Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td data-order="@item.OrderDate.ToString("yyyy-MM-dd")">
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CostCentre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingEndTime)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Caterer" asp-action="OrderDetails" asp-route-id="@item.OrderID">Order Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

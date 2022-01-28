@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<h1><strong>Order Hospitality at Great Minster House</strong></h1>
+<br />
+<p>Make sure you are using the Chrome browser for this application.</p>
+<br />
+<p>You can use this service to order refreshments for meeting or events in Great Minster House, for delivery between 9am and 5pm.</p>
+<br />
+<p>Orders should be made either 1 full day (e.g. Monday for Wednesday) or 2 full days (e.g. Monday for Thursday) in advance depending on item.</p>
+<br />
+<div class="col-md-6">
+    <h4><b>Before you start</b></h4>
+    <h4>You'll need:</h4>
+    <p>• &nbsp;your contact details</p>
+    <p>• &nbsp;cost centre</p>
+    <p>• &nbsp;date of meeting or event</p>
+    <p>• &nbsp;start time/end time</p>
+    <p>• &nbsp;room location</p>
+    <p>• &nbsp;number of attendees</p>
+    <br />
+    <a asp-area="" asp-controller="Basket" asp-action="ShowBasket" class="govuk-button--start">Place Order ></a>
+    <br /><br />
+</div>
+<div class="col-md-4">
+    <h4><b>Further Information</b></h4>
+    <br />
+    <details class="govuk-details">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                To amend an order
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            <p>• &nbsp;Cancel your original order and place a new order</p>
+            <p>• &nbsp;Place a new order adding additional items.  Please reference your other order reference in the notes.</p>
+        </div>
+    </details>
+
+    <details class="govuk-details">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                To cancel orders
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            <p>• &nbsp;24 hours’ notice for standard lunches, breakfasts and snacks</p>
+            <p>• &nbsp;48 hours’ notice for any premier orders</p>
+            <br />
+            <p>If you cancel or amend an order within these time frames, your cost centre will still be charged.</p>
+        </div>
+    </details>
+
+    <details class="govuk-details">
+        <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                Dietary requirements
+            </span>
+        </summary>
+        <div class="govuk-details__text">
+            <p>If you or your guests have any special dietary requirements, you must specify this in the booking form when you place your order.</p>
+            <p>Do not identify individuals in your order, only the dietary need and number of portions. Items will be labelled with specified requirement.</p>
+            <br />
+        </div>
+    </details>
+</div>

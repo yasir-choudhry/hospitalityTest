@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "System Users";
+}
+
+@model IEnumerable<HospitalityGCP.Models.SystemUser>
+<h1>Add/Edit Users</h1>
+<br />
+<p>
+    <a aria-label="Add new user" asp-area="" asp-controller="Admin" asp-action="AddUser" class="btn btn-lg btn-primary">Add New User</a>
+</p>
+<br />
+<table aria-label="List of Users" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EthosName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCaterer)
+            </th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EthosName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAdmin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCaterer)
+                </td>
+                <td>
+                    <a aria-label="Edit User" class="btn btn-primary" asp-controller="Admin" asp-action="EditUser" asp-route-id="@item.UserID">Edit</a>
+                </td>
+                <td>
+                    <a aria-label="Delete User" class="btn btn-danger" asp-action="DeleteUser" asp-route-id="@item.UserID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Order Details";
+}
+
+@model HospitalityGCP.Models.ViewModelOrderDetails
+
+<h1><b>Order Details</b></h1>
+<br />
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.OrderStatus)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.OrderStatus)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.OrderID)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.OrderID)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.RequestedDateTime)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.RequestedDateTime)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.OrderDate)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.OrderDate)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.UserName)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.UserName)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.UserEmail)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.UserEmail)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.UserPhone)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.UserPhone)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.CostCentre)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.CostCentre)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.NumAttendees)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.NumAttendees)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.HostName)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.HostName)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.HostEmail)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.HostEmail)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.HostPhone)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.HostPhone)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.RoomDesc)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.RoomDesc)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.MeetingStartTime)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.MeetingStartTime)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.MeetingEndTime)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.MeetingEndTime)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.DietaryReq)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.DietaryReq)</p>
+<p><b>@Html.DisplayNameFor(model => model.OrdersDetails.Notes)</b> - @Html.DisplayFor(modelItem => Model.OrdersDetails.Notes)</p>
+
+<br />
+
+<h2><b>Ordered Items</b></h2>
+
+<table aria-label="Table of ordered items" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().ItemTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().MenuItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().MenuItemDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().NoticeReq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().MenuItemPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderedItems.FirstOrDefault().Qty)
+            </th>
+            <th>
+                ItemTotal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderedItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuItemDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoticeReq)
+                </td>
+                <td>
+                    £@Html.DisplayFor(modelItem => item.MenuItemPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    <strong>£@((item.Qty * item.MenuItemPrice).ToString("N"))</strong>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-right"><strong>Basket Total:</strong></td>
+            <td>
+                <strong>£@Model.OrderedItems.Sum(x => x.MenuItemPrice * x.Qty).ToString("N")</strong>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<br />
+@if (Model.OrdersDetails.OrderStatus == "Open")
+{
+    <a class="btn btn-danger" asp-action="CloseOrder" asp-route-id="@Model.OrdersDetails.OrderID">Close Order</a>
+}

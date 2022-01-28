@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @*Script for Google Analytics*@
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134231385-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-134231385-1');
+        </script>
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Hospitality</title>
+        <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/images/favicon.ico" type="image/x-icon" />
+
+        <environment include="Development">
+            <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+            <link href="~/css/site.css" rel="stylesheet" />
+            <link href="~/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+        </environment>
+        <environment exclude="Development">
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+                    asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                    asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+            <link href="~/css/dataTables.bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        </environment>
+
+        <style>
+            body {
+                margin: 0;
+                padding-top: 0
+            }
+
+            .navbar-inverse .navbar-nav > li > a {
+                color: white;
+                font-weight: bold;
+                font-size: 1.10em;
+            }
+
+            .navbar-inverse .navbar-nav > li > a:focus,
+            .navbar-inverse .navbar-nav > .active > a,
+            .navbar-inverse .navbar-nav > .active > a:focus {
+                text-decoration: underline
+            }
+
+            .navbar-inverse {
+                background-color: black
+            }
+
+            .navbar-inverse:hover .navbar-nav:hover > li:hover > a:hover {
+                color: #cccccc !important;
+                text-decoration: underline
+            }
+        </style>
+    </head>
+
+    <body>
+        @*<a class="skip-main" href="#main">Skip to main content</a>*@
+
+        @await Component.InvokeAsync("Menu")
+
+        <partial name="_CookieConsentPartial" />
+
+        <div id="main" tabindex="-1" class="container body-content">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-footer">
+                <img class="DSbanner" src="~/images/digitalServiceLogo.png" width="155" align="right" alt="Digital Service logo" />
+                <svg role="presentation" focusable="false" class="govuk-footer__licence-logo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 483.2 195.7" height="17" width="41">
+                    <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145" />
+                </svg>
+                <span>
+                    All content is available under the
+                    <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+                </span>
+            </div>
+        </footer>
+
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/jquery.dataTables.min.js"></script>
+            <script src="~/js/dataTables.bootstrap.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+
+            <script src="~/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+            <script src="~/js/dataTables.bootstrap.min.js" asp-append-version="true"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>

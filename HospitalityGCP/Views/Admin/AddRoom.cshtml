@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Add Room";
+}
+
+@model HospitalityGCP.Models.Rooms
+
+
+<form aria-label="Add new room" asp-action="AddRoom" id="_frmNewRoom">
+    <h1>Add room or breakout area</h1>
+    <fieldset>
+        <legend></legend>
+        <p style="color:#b10e1e"><b>* All fields required</b></p>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" asp-for="RoomDesc"></label>
+                    <input aria-label="Room Description" class="form-control" asp-for="RoomDesc" />
+                    <span asp-validation-for="RoomDesc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <input aria-label="Save changes to rooms" type="submit" value="Save" class="btn btn-success" />
+        <a aria-label="Cancel room changes" class="btn btn-warning" asp-controller="Admin" asp-action="Rooms">Cancel</a>
+    </fieldset>
+</form>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<h1>Order Confirmation</h1>
+<br />
+<h2>Thank you for your order.</h2>
+<h2>Your order has now been sent to the catering staff.</h2>
+<br />
+<h3 class="text-danger"><strong>Your order reference is:</strong></h3>
+<h2 class="text-success"><strong>@ViewBag.OrderRef</strong></h2>
+<br />
+<h4>You will receive an email containing your order details.</h4>
+<h4>Your order can no longer be amended.  However, you can cancel your order with over 24 hours notice.</h4>
+<h5 class="text-danger"><strong>If you cancel with less than One full business day notice you will still be charged for the order.</strong></h5>
+<br />
+<a class="btn btn-primary" asp-action="ViewOrder" asp-controller="Basket">View your orders</a>

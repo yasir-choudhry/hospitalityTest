@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Edit User";
+}
+
+@model HospitalityGCP.Models.SystemUser
+
+
+<form asp-action="EditUser">
+    <h1>Edit User</h1>
+    <fieldset>
+        <legend>
+        </legend>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="UserID" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserFirstName"></label>
+                    <input aria-label="User First Name" class="form-control" asp-for="UserFirstName" />
+                    <span asp-validation-for="UserFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserLastName"></label>
+                    <input aria-label="User Last Name" class="form-control" asp-for="UserLastName">
+                    <span asp-validation-for="UserLastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="EthosName"></label>
+                    <input aria-label="Ethos Name" class="form-control" asp-for="EthosName">
+                    <span asp-validation-for="EthosName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserEmail"></label>
+                    <input aria-label="User Email" class="form-control" asp-for="UserEmail">
+                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                        </label>
+                    </div>
+                    <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsCaterer" /> @Html.DisplayNameFor(model => model.IsCaterer)
+                        </label>
+                    </div>
+                    <span asp-validation-for="IsCaterer" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <input aria-label="Save Changes to Users" type="submit" value="Save Changes" class="btn btn-lg btn-success" />
+        <a aria-label="Cancel changes to users" class="btn btn-lg btn-warning" asp-controller="Admin" asp-action="SystemUserList">Cancel</a>
+    </fieldset>
+</form>

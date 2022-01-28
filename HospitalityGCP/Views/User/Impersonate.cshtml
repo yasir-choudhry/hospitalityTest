@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Impersonate";
+}
+
+<h1>Impersonate</h1>
+
+<form method="post">
+    <select name="UserTypeID">
+        <option aria-label="Standard User" value="1">Standard User</option>
+        <option aria-label="Admin" value="2">Admin</option>
+        <option aria-label="Caterer" value="3">Caterer</option>
+    </select>
+    <br />
+    <br />
+    <button type="submit" asp-action="ChangeImpersonation" asp-controller="User" class="btn btn-success">Save</button>
+</form>

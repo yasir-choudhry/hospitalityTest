@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Add User";
+}
+
+@model HospitalityGCP.Models.SystemUser
+
+
+<form asp-action="AddUser" id="_frmNewUser">
+    <h1>Add User</h1>
+    <fieldset>
+        <legend>
+        </legend>
+        <p style="color:#b10e1e"><b>* All fields required</b></p>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserFirstName"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="User First Name" class="form-control" asp-for="UserFirstName" />
+                    <span asp-validation-for="UserFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserLastName"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="User Last name" class="form-control" asp-for="UserLastName">
+                    <span asp-validation-for="UserLastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserEmail"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="User Email" class="form-control" asp-for="UserEmail" />
+                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="EthosName"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="Ethos Name" class="form-control" asp-for="EthosName" />
+                    <span asp-validation-for="EthosName" class="text-danger"></span>
+                </div>
+                <p style="color:#b10e1e"><b>* At least one option is required</b></p>
+                <div class="checkbox">
+                    <label class="control-label" asp-for="IsAdmin">
+                        <input aria-label="Is Admin?" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                    </label>
+                </div>
+                <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                <div class="checkbox">
+                    <label class="control-label" asp-for="IsCaterer">
+                        <input aria-label="Is Caterer?" asp-for="IsCaterer" /> @Html.DisplayNameFor(model => model.IsCaterer)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <input aria-label="Save changes to User" type="submit" value="Save" class="btn btn-lg btn-success" />
+        <a aria-label="Cancel changes to user" class="btn btn-lg btn-warning" asp-controller="Admin" asp-action="SystemUserList">Cancel</a>
+    </fieldset>
+</form>

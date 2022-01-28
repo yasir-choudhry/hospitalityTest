@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+}
+
+@model HospitalityGCP.Models.Order
+
+<form asp-action="PlaceOrder" id="_frmPlaceOrder">
+    <h1>Please add your details to complete the order</h1>
+    <fieldset>
+        <legend></legend>
+        <p style="color:#b10e1e"><b> * Required fields</b></p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserName"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="User Name" class="form-control" asp-for="UserName" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserEmail"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="User Email" class="form-control" asp-for="UserEmail" value="@(SystemUser.GetCurrentUserEmail())" />
+                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="UserPhone"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="User Phone" class="form-control" asp-for="UserPhone" />
+                    <span asp-validation-for="UserPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="CostCentre"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="Cost Centre" class="form-control" asp-for="CostCentre" />
+                    <span asp-validation-for="CostCentre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="NumAttendees"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="Number of attendees" class="form-control" type="number" min="1" max="200" asp-for="NumAttendees" />
+                    <span asp-validation-for="NumAttendees" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="HostName"></label><br />
+                    <input aria-label="Host Name" class="form-control" asp-for="HostName" />
+                    <span asp-validation-for="HostName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="HostEmail"></label><br />
+                    <input aria-label="Host Email" class="form-control" asp-for="HostEmail" />
+                    <span asp-validation-for="HostEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="HostPhone"></label><br />
+                    <input aria-label="Host Phone" class="form-control" asp-for="HostPhone" />
+                    <span asp-validation-for="HostPhone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="OrderDate"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="Order Date DD:MM:YY" class="form-control" type="date" asp-for="OrderDate" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span asp-validation-for="OrderDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="MeetingStartTime"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="Meeting Start Time HH:MM" class="form-control" type="time" step="300" min="09:00" max="18:00" asp-for="MeetingStartTime" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span asp-validation-for="MeetingStartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="MeetingEndTime"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <input aria-label="Meeting End Time HH:MM" class="form-control" step="300" type="time" min="09:00" max="18:00" asp-for="MeetingEndTime" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span asp-validation-for="MeetingEndTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" asp-for="RoomID"></label><span style="color:#b10e1e"><b> *</b></span><br />
+                    <select asp-for="RoomID" class="form-control" asp-items="@(new SelectList(@ViewBag.ListOfRooms, "RoomID", "RoomDesc"))">
+                        <option value="0">Select location</option>
+                    </select>
+                    <span asp-validation-for="RoomID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="DietaryReq"></label><br />
+                    <textarea class="form-control" asp-for="DietaryReq" placeholder="Please enter any dietary requirements here"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" asp-for="Notes"></label><br />
+                    <textarea class="form-control" asp-for="Notes" placeholder="Please enter any notes for the caterer here"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" asp-controller="Basket" asp-action="PlaceOrder" class="btn btn-lg btn-success" style="float:right">Place your Order</button>
+                    <a class="btn btn-lg btn-warning" asp-controller="Basket" asp-action="ShowBasket">Back to Basket</a>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>

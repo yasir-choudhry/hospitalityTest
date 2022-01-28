@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Rooms";
+}
+
+@model IEnumerable<HospitalityGCP.Models.Rooms>
+
+<h1>Add/Edit Rooms</h1>
+<br />
+<p>
+    <a aria-label="Add new Room" asp-area="" asp-controller="Admin" asp-action="AddRoom" class="btn btn-lg btn-primary">Add New Room</a>
+</p>
+<br />
+<table aria-label="List of current rooms" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RFD)
+            </th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFD)
+                </td>
+                <td>
+                    <a aria-label="Edit room" class="btn btn-primary" asp-controller="Admin" asp-action="EditRoom" asp-route-id="@item.RoomID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

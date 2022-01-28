@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Add Item";
+}
+
+@model HospitalityGCP.Models.MenuItems
+
+<form asp-action="AddMenuItem" id="_frmCreateMenuItem">
+    <h1>Add Menu Item</h1>
+    <fieldset>
+        <legend>
+        </legend>
+        <p style="color:#b10e1e"><b>* All fields required</b></p>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="Position"></label><span><b> in menu list</b></span><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="Position" class="form-control" asp-for="Position" min="1" />
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" asp-for="MenuItemName"></label><span><b> name</b></span><span style="color:#b10e1e"><b> *</b></span>
+                    <input aria-label="Menu Item Name" class="form-control" asp-for="MenuItemName" />
+                    <span asp-validation-for="MenuItemName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" asp-for="MenuItemDesc"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <textarea class="form-control" asp-for="MenuItemDesc" rows="3" cols="40"></textarea>
+                    <span asp-validation-for="MenuItemDesc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="MenuItemPrice"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <div class="input-group">
+                        <span class="input-group-addon">£</span>
+                        <input aria-label="Menu Item Price" class="form-control" asp-for="MenuItemPrice" />
+                    </div>
+                    <span asp-validation-for="MenuItemPrice" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" asp-for="NoticeReq"></label><span style="color:#b10e1e"><b> *</b></span>
+                    <select class="form-control" asp-for="NoticeReq">
+                        <option value="None">None</option>
+                        <option value="One full business day">One full business day</option>
+                        <option value="Two full business days">Two full business days</option>
+                    </select>
+                    <span asp-validation-for="NoticeReq" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <input aria-label="Save Menu Item" type="submit" value="Save" class="btn btn-lg btn-success" />
+        <a aria-label="Cancel changes" class="btn btn-lg btn-warning" asp-controller="Admin" asp-action="MenuItemsList">Cancel</a>
+    </fieldset>
+</form>

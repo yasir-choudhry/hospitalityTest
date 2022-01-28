@@ -1,0 +1,63 @@
+steps:
+
+# sonarqube scanner
+#- name: 'gcr.io/$PROJECT_ID/sonar-scanner:latest'
+#  args:
+#  - '-Dsonar.host.url=${_SONAR_URL}'
+#  - '-Dsonar.login=${_SONAR_LOGIN}'
+#  - '-Dsonar.projectKey=${_SONAR_PROJECT}'
+#  id: 'SonarScanner'
+#  waitFor: ['-']
+
+# Decrypt appsettings
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./HospitalityGCP/EncryptedFiles/appsettings.dev.json.enc'
+  - '--plaintext-file=./HospitalityGCP/appsettings.json'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  id: 'DecryptAppsettings'
+  waitFor: ['-']
+
+ # Decrypt app yaml
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./HospitalityGCP/EncryptedFiles/app.dev.yaml.enc'
+  - '--plaintext-file=./app.yaml'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  id: 'DecryptAppYaml'
+  waitFor: ['DecryptAppsettings']
+
+# Step:1= Build Docker image
+- name: 'docker'
+  id: 'BuildImage'
+  args: ['build', '--no-cache', '-t', 'gcr.io/$PROJECT_ID/hospitalitygcp:$SHORT_SHA', '-t', 'gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}', '-f', 'HospitalityGCP/Dockerfile', '.']
+  waitFor: ['DecryptAppYaml']
+
+# Step:2a = Store image SHA
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'StoreImageSHA'
+  args: ['push', 'gcr.io/$PROJECT_ID/hospitalitygcp:$SHORT_SHA']  
+  waitFor: ['BuildImage']
+
+# Step:2b = Store image _APP_ENV
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'StoreImageAppEnv'
+  args: ['push', 'gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}']  
+  waitFor: ['BuildImage']
+
+# Step:3 = Deploy service
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'DeployService'
+  entrypoint: 'gcloud'
+  args: ['app', 'deploy', '--image-url=gcr.io/$PROJECT_ID/hospitalitygcp:${_APP_ENV}', '--version', '${_VERSION}']
+  waitFor: ['StoreImageAppEnv']
+
+timeout: 20m

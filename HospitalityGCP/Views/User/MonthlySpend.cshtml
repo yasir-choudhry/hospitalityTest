@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Monthly Spend";
+}
+
+@model HospitalityGCP.Models.ViewModelUserReport
+
+<h1>Monthly Spend</h1>
+<br />
+<form asp-action="MonthlySpend">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="control-label">Month / Year</label>
+                @if (Model.reportDate == null)
+                {
+                    <input aria-label="reportdate" class="form-control" type="month" name="reportdate" required />
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.reportDate, new { @class = "form-control", @type = "month", @name = "reportdate" })
+                    //@Html.TextBoxFor(model => model.yearDate, new { @class = "form-control", @type = "date", @name = "yeardate" })
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="submit" value="Get Report" class="btn btn-success" />
+            <a class="btn btn-warning" asp-controller="Basket" asp-action="ViewOrder">Cancel</a>
+            <br />
+            <br />
+        </div>
+    </div>
+</form>
+<br /><br />
+@if (Model.OrdersList != null && Model.OrdersList.Count() > 0)
+{
+    <h2>Monthly Spend Details</h2>
+    <h3>for @SystemUser.GetCurrentUserEmail()</h3>
+    <br />
+    <br />
+
+    <table aria-label="Table of monthly spend" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrdersList.FirstOrDefault().OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrdersList.FirstOrDefault().OrderID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrdersList.FirstOrDefault().CostCentre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrdersList.FirstOrDefault().UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrdersList.FirstOrDefault().BasketTotal)
+                </th>
+                @*<th> View Details</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrdersList)
+            {
+                <tr>
+                    <td data-order="@item.OrderDate.ToString("yyyy-MM-dd")">
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostCentre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        <strong>£@Html.DisplayFor(modelItem => item.BasketTotal)</strong>
+                    </td>
+                    @*<td>
+                            <a class="btn btn-primary btn-xs" asp-controller="User" asp-action="UserOrderDetails" asp-route-id="@item.OrderID">Order Details</a>
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right"><strong>Monthly Total:</strong></td>
+                <td>
+                    <strong>£@Model.OrdersList.Sum(x => x.BasketTotal)</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    if (Model.reportDate != null)
+    {
+        <strong class="text-danger">There are no matching orders for the above date</strong>
+    }
+}
