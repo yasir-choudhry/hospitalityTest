@@ -1,5 +1,7 @@
 name: Build
 on:
+  check_run:
+    types: [rerequested, completed]
   push:
     branches:
       - master
