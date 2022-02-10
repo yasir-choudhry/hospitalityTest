@@ -22,5 +22,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+   
+  <ItemGroup>
+    <PackageReference Include="Halibut" Version="4.4.9" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.0.10" />
+  </ItemGroup>
 
 </Project>
